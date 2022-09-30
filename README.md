@@ -1,2 +1,2 @@
 # PhraseLockOEM_Android
-PhraseLock USB-Key FIDO2 Integration for Android
+PhraseLock Security Integration example for Android
