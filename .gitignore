@@ -17,3 +17,4 @@ app/build/tmp
 app/build/outputs
 app/build/intermediates
 app/build/generated/data_binding_base_class_source_out
+BuildConfig.java
