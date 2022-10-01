@@ -11,4 +11,6 @@ This sample project is the starting point to build your own FIDO2 token. All you
 
 <img style="margin:0px auto" src="https://ipoxo.com/wp_ipx/postimg/oem/OEM_Blockdiagramm.png" width="600">
 
- [![Watch the video]()](https://ipoxo.com/video/PhraseLock2.mp4)
+[![Watch the video](https://ipoxo.com/video/PhraseLock2.jpg)](https://ipoxo.com/video/PhraseLock2.mp4)
+
+[![Watch the video](https://ipoxo.com/video/PhraseLock1.jpg)](https://ipoxo.com/video/PhraseLock1.mp4)
