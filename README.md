@@ -6,10 +6,13 @@ This sample project is the starting point to build your own FIDO2 token. All you
  
  *Just if you are not familiar with Phrase-Lock: Phrase-Lock USB-Keys implement functionality via HID interfaces where all the business logic is on your smartphone. Uses cases are automatically typing in a password or login without password where FIDO2 is supported.*
 
+<img width="400px" src="https://ipoxo.com/wp_ipx/postimg/oem/SSD005_Black_Group.png"
+     style="margin:0px auto;" />
+
  The library in **/app/libs/PhraseLockOEM.aar** has all the necessary interface to implement the use cases you like to implement. The picture below gives you an overview of what the USB-Key and the library are providing.
+<br/>
 
-
-<img style="margin:0px auto" src="https://ipoxo.com/wp_ipx/postimg/oem/OEM_Blockdiagramm.png" width="600">
+<img width="600px" src="https://ipoxo.com/wp_ipx/postimg/oem/OEM_Blockdiagramm.png" style="margin:0px auto;" />
 
 
 
@@ -24,7 +27,7 @@ You can use your own ID (AAGUID), your own root certificate and your own client 
 
 <br/><br/>
 ## Login with Phrase-Lock Demo App into Windows 11 via AzureAD and Windows Hello
-This is for all CIO: If you want to get rid of passwords, the Phrase-Lock library is for you. Usually hardware token must be carefully protected against misuse. No Problem with Phrase-Lock, just let the USB-Key plugged in on the PC or Laptop, because there are absolutely no interesting data on it. So it can't get lost easely - which minimises the replacement logistics tremendously. <br/>
+__This is for all CXOs__: If you want to get rid of passwords, the Phrase-Lock library is for you. Usually hardware token must be carefully protected against misuse. No Problem with Phrase-Lock, just let the USB-Key plugged in on the PC or Laptop, because there are absolutely no interesting data on it. So it can't get lost easely - which minimises the replacement logistics tremendously. <br/>
 Every ID, certificate or identification is stored in your app. Or you prefer to keep them save in the backend and to provide credentials only if they are required, limited by time and location if you like. You have any freedom to build a secure __*user-authentication-infrastructure*__ the way you want, the way you need to protect your business.
 <br/>
 Microsoft AzureAD supports filtering of FIDO2-token via there unique ID (AAGUID). So just go ahead and limit the type of token you like to accept. 
