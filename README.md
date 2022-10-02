@@ -6,15 +6,21 @@ This sample project is the starting point to build your own FIDO2 token. All you
 
 <hr/>
 
- *Just if you are not familiar with PhraseLock: PhraseLock USB-Keys implement functionality via HID interfaces where all the business logic is on your smartphone. Uses cases are automatically typing in a password or login without password where FIDO2 is supported.*
+ **Just if you are not familiar with PhraseLock:** PhraseLock USB-Keys implement functionality via HID interfaces where all the business logic is on your smartphone. Typically uses cases are automatically typing in a password or login without password where FIDO2 is supported.
+ <br/>
 
+<div align="center">
+
+If you want to discover more what PraseLock can do for you please visit our home page <br> **[ https://ipoxo.com](https://ipoxo.com).**
+
+</div>
+
+<br/>
 <p align="center">
 <img width="400px" src="https://ipoxo.com/wp_ipx/postimg/oem/SSD005_Black_Group.png"
      style="margin:0px auto;" />
 </p>
-
 <hr/>
-
 <br/>
  The library in **/app/libs/PhraseLockOEM.aar** provides all necessary interface to develop the use cases you like to implement. The picture below gives you an overview of what the USB-Key and the library are providing.
 <br/>
