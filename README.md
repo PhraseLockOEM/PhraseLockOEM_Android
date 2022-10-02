@@ -3,14 +3,17 @@ PhraseLock Security Integration example for Android
 
 
 This sample project is the starting point to build your own FIDO2 token. All you need is this sample code and a [Phrase-Lock FIDO2 USB-Key](https://ipoxo.com/?page_id=736). The USB-Key is nothing but hardware interface to the computer (host) where you want to use it. 
- 
+
+_________________
+
  *Just if you are not familiar with Phrase-Lock: Phrase-Lock USB-Keys implement functionality via HID interfaces where all the business logic is on your smartphone. Uses cases are automatically typing in a password or login without password where FIDO2 is supported.*
 
 <p align="center">
 <img width="400px" src="https://ipoxo.com/wp_ipx/postimg/oem/SSD005_Black_Group.png"
      style="margin:0px auto;" />
 </p>
-
+__________________
+<br/>
  The library in **/app/libs/PhraseLockOEM.aar** provides all necessary interface to develop the use cases you like to implement. The picture below gives you an overview of what the USB-Key and the library are providing.
 <br/>
 <p align="center">
