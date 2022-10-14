@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 				p12PrivCert,
 				certPWD,
 				apiKey,
-				0x0000); // Logging filter
+				0xFFFF); // Logging filter
 		
 		/**
 		 Logging explaination:
