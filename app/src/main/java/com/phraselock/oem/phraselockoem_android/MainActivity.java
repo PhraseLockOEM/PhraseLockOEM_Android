@@ -34,14 +34,14 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	/*
 	PhraseLock Community API-Key. Required to run specific functionality on the USB-Key.
 	*/
-	public static final char[] OEM_API_KEY_T4 = {
+	public static final char[] COMMUNITY_API_KEY_T4 = {
 			0xC6,0x6D,0x84,0x6B,0x3D,0x34,0xD7,0x10,0xB5,0x87,0xB6,0xE1,0x9B,0x4E,0x52,0xEE,
 			0x85,0xB0,0x96,0xAB,0xB1,0x6F,0x1F,0x00,0x07,0x4B,0xFF,0x19,0x57,0x06,0x8D,0xC2,
 			0xF2,0x26,0x9B,0x72,0xF2,0xD4,0xC7,0x2A,0x21,0x45,0xBE,0x69,0xAE,0x49,0xD5,0x10,
 			0x1B,0x17,0x73,0x2B,0x1C,0xC3,0x05,0x3E,0x55,0x48,0xE1,0x03,0x66,0xF0,0x95,0x9A,
 	};
 	
-	public static final char[] API_KEY = OEM_API_KEY_T4;
+	public static final char[] API_KEY = COMMUNITY_API_KEY_T4;
 	
 	public static String aagUUID          = "F0DB552BB9B74AE6BCAF4E87F9C563D4";       /*  Identifying your authenticator model */
 	public static String certPath         = "keystore/my_fido2_cert.p12";               /* Certificate for FIDO2 */
@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 				p12PrivCert,
 				certPWD,
 				apiKey,
-				0xFFFF); // Logging filter
+				0x0000); // Logging filter
 		
 		/**
 		 Logging explaination:
@@ -136,10 +136,11 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		 #define LOG_CBOR			0x00000020		Deep logging of CBOR
 		 #define LOG_DMP			    0x00000040		Deep logging of dumps
 		 
-		 #define LOG_INIT			0x00000080		Logging of BLE init-prozess
-		 #define LOG_BLE_RW			0x00000100		Extended logging of BLE communication
-		 #define LOG_DGB_BLE		    0x00000200		Logging of full BLE communication
-		 #define LOG_DGB_BLE_FINE	0x00000400		Deep logging of BLE communication
+		 #define LOG_INIT            0x00000080		Logging of BLE init-prozess
+		 #define LOG_BLE_RW          0x00000100   	Extended logging of BLE communication
+		 #define LOG_BLE_WRITE_ACK   0x00000200   	write data ack received
+		 #define LOG_DGB_BLE         0x00000400   	Logging of full BLE communication
+		 #define LOG_DGB_BLE_FINE    0x00000800	 	Deep logging of BLE communication
 		 */
 		
 		/* ***************** PhraseLock Initialisation END  ***************** */
@@ -290,7 +291,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 						public void run() {
 							while (true) {
 								i++;
-								if (i == 75) {
+								if (i == 50) {
 									alertDlg.cancel();
 									synchronized (syncToken) {
 										syncToken.notifyAll();
@@ -353,13 +354,14 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	
 	@Override
 	public void storeResidentKeyRecord(String uname,
+	                                   String userid,
 	                                   String dname,
 	                                   String rpidhash,
 	                                   String cridhash,
 	                                   String residentkey,
 	                                   String privkey)
 	{
-		db.storeResidentKeyRecord(uname, dname, rpidhash, cridhash, residentkey, privkey);
+		db.storeResidentKeyRecord(uname, userid, dname, rpidhash, cridhash, residentkey, privkey);
 	}
 	
 	

@@ -62,7 +62,7 @@ public class DB extends SQLiteOpenHelper {
 			SQLiteDatabase sql = getReadableDatabase();
 			String cmd = String.format("SELECT *from '%s';", tablename);
 			Cursor c = sql.rawQuery(cmd, null);
-			dumpSQLResultJSON(c,sb,"table");
+			dumpSQLResultJSON(c,sb,tablename);
 			c.close();
 			sql.close();
 		}catch (Exception e){
@@ -166,9 +166,11 @@ public class DB extends SQLiteOpenHelper {
 			sql.execSQL("DROP TABLE IF EXISTS residentCredData;");
 			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx01;");
 			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx02;");
+			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx03;");
 			
 			sql.execSQL("CREATE TABLE IF NOT EXISTS residentCredData ( " +
 					"idx            INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+					"userid		    TEXT DEFAULT '-', " +
 					"uname          TEXT DEFAULT '-', " +
 					"dname          TEXT DEFAULT '-', " +
 					"rpidhash       TEXT DEFAULT '-', " +
@@ -177,8 +179,9 @@ public class DB extends SQLiteOpenHelper {
 					"privkey        TEXT DEFAULT '-' );"
 			);
 			
-			sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx01 ON residentCreds (cridhash,rpidhash);");
-			sql.execSQL("CREATE INDEX residentCredData_idx02 ON residentCreds (cridhash);");
+			sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx01 ON residentCredData (cridhash,rpidhash);");
+			sql.execSQL("CREATE INDEX residentCredData_idx02 ON residentCredData (cridhash);");
+			sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx03 ON residentCredData (userid);");
 			
 		}catch (Exception e){
 			Log.d(DB.DBGLEVEL, "DB-Exception on dbResidentCredDataReset: " + e.getMessage()+" / "+e.toString());
@@ -352,6 +355,7 @@ public class DB extends SQLiteOpenHelper {
 	}
 
 	public void storeResidentKeyRecord(String uname,
+	                                   String userid,
 	                                   String dname,
 	                                   String rpidhash,
 	                                   String cridhash,
@@ -360,9 +364,9 @@ public class DB extends SQLiteOpenHelper {
 	{
 		try{
 			String query = String.format("INSERT OR REPLACE INTO residentCredData " +
-							" (uname, dname, rpidhash, cridhash, residentkey, privkey) " +
-							" VALUES ('%s', '%s', '%s', '%s', '%s', '%s');",
-					uname, dname, rpidhash, cridhash, residentkey, privkey);
+							" (uname, userid, dname, rpidhash, cridhash, residentkey, privkey) " +
+							" VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+					uname, userid, dname, rpidhash, cridhash, residentkey, privkey);
 			SQLiteDatabase sql = getWritableDatabase();
 			sql.execSQL(query);
 			sql.close();
