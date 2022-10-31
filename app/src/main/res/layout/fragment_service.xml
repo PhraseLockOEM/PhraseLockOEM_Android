@@ -54,19 +54,20 @@
 
     <TextView
         android:id="@+id/logService"
-        android:layout_width="366dp"
+        android:layout_width="0dp"
 
-        android:layout_height="150dp"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="56dp"
-        android:gravity="bottom"
 
+        android:gravity="bottom"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView2"
