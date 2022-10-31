@@ -63,7 +63,6 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
     EditText hidString = null;
     Button sendHIDDataBtn = null;
 	Button setUSBModeBtn = null;
-	Button testBtn = null;
 	int usbCurrentMode;
     DB db;
 
@@ -80,7 +79,6 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
         hidString               = root.findViewById(R.id.hidString);
 	    sendHIDDataBtn          = root.findViewById(R.id.sendHIDData);
 	    setUSBModeBtn           = root.findViewById(R.id.setUSBMode);
-	    testBtn                 = root.findViewById(R.id.testBtn);
 	    appState                = root.findViewById(R.id.appState);
 	    usbModeState            = root.findViewById(R.id.usbModeState);
 		
@@ -101,8 +99,6 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
 	    sendHIDDataBtn.setOnClickListener(v -> sendHIDData( String.format("%s\r",hidString.getText().toString())));
 	
 	    setUSBModeBtn.setOnClickListener(v -> setUSBMode());
-	
-	    testBtn.setOnClickListener(v -> test());
 		
         // Jetzt die Datenbank starten
         db = ((MainActivity)this.getActivity()).db;
@@ -121,15 +117,11 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
 	    StringBuffer sb = new StringBuffer();
 		sb.append("PhraseLockOEM.aar OEM-Lib Version : ");
 	    sb.append(oemLibVers);
+	    sb.append("\n");
 	    logTextView.setText(sb.toString());
 		
 	    return root;
     }
-	
-	public void test(){
-		String dmp = db.dumpTableJSON("residentCredData");
-		log(dmp);
-	}
 	
     @Override
     public void onResume()
@@ -246,7 +238,7 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
 	@Override
     public void delegateLogging(long filter, String logStr)
     {
-		log(logStr);
+	    Log.i("PLNK_DEBUG",logStr);
     }
 	
 	/* Indicates key-status of NUM-, SCROLL- and CAPS-lock*/
@@ -264,7 +256,7 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
 	@Override
     public void delegateKeyboardStreamDone(byte error)
     {
-		//log("HID Data Transfer done with error: " + String.valueOf(error));
+	    log("HID Data Transfer done with error: " + String.valueOf(error));
     }
 	
 	private void sendHIDData(String asciiString)
