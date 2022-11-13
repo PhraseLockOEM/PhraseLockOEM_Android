@@ -121,7 +121,13 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 				p12PrivCert,
 				certPWD,
 				apiKey,
-				0x0000); // Logging filter
+				0x000); // Logging filter
+		
+		/**
+		 * loadTokenID() is used to aply a different token
+		 *
+		 * ploem.loadTokenID("Your-Specific-Token", [the certificate in pfx format], "the certificate-passwort");
+		 */
 		
 		/**
 		 Logging explaination:
@@ -201,14 +207,6 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	public byte[] getCoreDataForServiceUUID(ParcelUuid serviceUUID) {
 		byte[] cd = db.getCoreDataSet(serviceUUID.getUuid().toString());
 		return cd;
-	}
-	
-	@Override
-	public long getAtomicSignCounter(long baseNumber) {
-		long counter1 = db.getBlockdata(DB.ATOMIC_COUNTER, 1);
-		counter1 += (baseNumber + 1);
-		db.setBlockdata(DB.ATOMIC_COUNTER, counter1);
-		return counter1;
 	}
 	
 	@Override
