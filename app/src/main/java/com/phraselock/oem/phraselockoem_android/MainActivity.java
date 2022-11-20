@@ -108,20 +108,26 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		
 		ploem = new PhraseLock();
 		String certID = null;
-		String rpID = "GENERIC_RP_1";
+		String rpID = "GENERIC_TOKEN_ID";
 		
 		byte[] p12PrivCert = readByteArrayFile(this, certPath);
 		byte[] apiKey = DB.charArray2byteArray(MainActivity.API_KEY);
 		String certPWD = getCertPWD(certID);
 		
 		ploem = new PhraseLock();
-		ploem.initWithPKCS12(this,
-				this,
-				rpID,
-				p12PrivCert,
-				certPWD,
-				apiKey,
-				0x000); // Logging filter
+		ploem.initPhraseLock(this, this, apiKey, 0x000); // Logging filter
+		
+		ploem.enableUserVerification(false);
+		
+		boolean bInt = ploem.loadTokenID(rpID, null, p12PrivCert, certPWD);
+		
+		if(!bInt)
+		{
+			bInt = ploem.loadTokenID(rpID, "12345678910", p12PrivCert, certPWD);
+		}
+		
+		//ploem.unLoadTokenID();
+		
 		
 		/**
 		 * loadTokenID() is used to aply a different token
