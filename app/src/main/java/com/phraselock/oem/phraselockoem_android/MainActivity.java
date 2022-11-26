@@ -215,7 +215,6 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		return cd;
 	}
 	
-	@Override
 	public String getCertPWD(String s) {
 		String certPWD = new String(certPassword);
 		return certPWD;
@@ -342,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public byte[] getAuthnStateConfig(String rp) {
+	public byte[] readAuthnStateConfig(String rp) {
 		String sas;
 		if (rp != null && rp.length() > 0) {
 			StringBuffer idx = new StringBuffer();
