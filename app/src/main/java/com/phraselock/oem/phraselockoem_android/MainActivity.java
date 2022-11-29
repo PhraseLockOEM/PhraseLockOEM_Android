@@ -126,9 +126,6 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 			bInt = ploem.loadTokenID(rpID, "12345678910", p12PrivCert, certPWD);
 		}
 		
-		//ploem.unLoadTokenID();
-		
-		
 		/**
 		 * loadTokenID() is used to aply a different token
 		 *
@@ -205,8 +202,8 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public byte[] getAAGUID() {
-		return DB.hexStringToByteArray(aagUUID);
+	public String getAAGUID() {
+		return aagUUID;
 	}
 	
 	@Override
@@ -328,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public void storeAuthnStateConfig(byte[] authConfig, String rp) {
+	public void storeAuthnStateConfig(String authConfig, String rp) {
 		if (rp != null && rp.length() > 0) {
 			StringBuffer idx = new StringBuffer();
 			idx.append(DB.GLOBAL_AUTHNDATA);
@@ -341,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public byte[] readAuthnStateConfig(String rp) {
+	public String readAuthnStateConfig(String rp) {
 		String sas;
 		if (rp != null && rp.length() > 0) {
 			StringBuffer idx = new StringBuffer();
@@ -352,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		} else {
 			sas = db.getBlockdata(DB.GLOBAL_AUTHNDATA, "");
 		}
-		return DB.hexStringToByteArray(sas);
+		return sas;
 	}
 	
 	@Override
