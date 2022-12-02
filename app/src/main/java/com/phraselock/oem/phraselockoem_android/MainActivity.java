@@ -108,7 +108,9 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		
 		ploem = new PhraseLock();
 		String certID = null;
-		String rpID = "GENERIC_TOKEN_ID";
+		String rp1 = "8CC24602-03BA-4F24-B80C-8F16EB93AA1E";
+		String rp2 = "14678";
+		
 		
 		byte[] p12PrivCert = readByteArrayFile(this, certPath);
 		byte[] apiKey = DB.charArray2byteArray(MainActivity.API_KEY);
@@ -119,11 +121,11 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 		
 		ploem.enableUserVerification(false);
 		
-		boolean bInt = ploem.loadTokenID(rpID, null, p12PrivCert, certPWD);
+		boolean bInt = ploem.loadTokenID(rp1, rp2, null, p12PrivCert, certPWD);
 		
 		if(!bInt)
 		{
-			bInt = ploem.loadTokenID(rpID, "12345678910", p12PrivCert, certPWD);
+			bInt = ploem.loadTokenID(rp1, rp2, "12345678910", p12PrivCert, certPWD);
 		}
 		
 		/**
@@ -325,12 +327,14 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public void storeAuthnStateConfig(String authConfig, String rp) {
-		if (rp != null && rp.length() > 0) {
+	public void storeAuthnStateConfig(String authConfig, String rp1, String rp2) {
+		if (rp1 != null && rp1.length() > 0) {
 			StringBuffer idx = new StringBuffer();
 			idx.append(DB.GLOBAL_AUTHNDATA);
 			idx.append("_");
-			idx.append(rp);
+			idx.append(rp1);
+			idx.append("_");
+			idx.append(rp2);
 			db.setBlockdata(idx.toString(), authConfig);
 		} else {
 			db.setBlockdata(DB.GLOBAL_AUTHNDATA, authConfig);
@@ -338,13 +342,15 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
 	}
 	
 	@Override
-	public String readAuthnStateConfig(String rp) {
+	public String readAuthnStateConfig(String rp1, String rp2) {
 		String sas;
-		if (rp != null && rp.length() > 0) {
+		if (rp1 != null && rp1.length() > 0) {
 			StringBuffer idx = new StringBuffer();
 			idx.append(DB.GLOBAL_AUTHNDATA);
 			idx.append("_");
-			idx.append(rp);
+			idx.append(rp1);
+			idx.append("_");
+			idx.append(rp2);
 			sas = db.getBlockdata(idx.toString(), "");
 		} else {
 			sas = db.getBlockdata(DB.GLOBAL_AUTHNDATA, "");
