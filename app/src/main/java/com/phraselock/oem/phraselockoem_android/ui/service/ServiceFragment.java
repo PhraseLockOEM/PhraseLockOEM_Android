@@ -44,11 +44,6 @@ public class ServiceFragment extends PLOEMFragment {
 			result -> {
 				if(result.getContents() == null) {
 					Intent originalIntent = result.getOriginalIntent();
-					if (originalIntent == null) {
-						Log.d("MainActivity", "Cancelled scan");
-					} else if(originalIntent.hasExtra(Intents.Scan.MISSING_CAMERA_PERMISSION)) {
-						Log.d("MainActivity", "Cancelled scan due to missing camera permission");
-					}
 				} else {
 					Log.d("PLNK_DEBUG", "Scanned:");
 					String scanData = result.getContents();
