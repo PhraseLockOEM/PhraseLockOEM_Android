@@ -276,7 +276,8 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
   private void sendHIDData(String asciiString)
   {
     String map = readTXTFile(getContext(), MainActivity.scanCodes_DE_DE);
-    plhid.setKBDLayout(map, PhraseLock.PL_OS_TYPE.OS_WINDOWS_LINUX);
+    plhid.setKBDLayout(map, PLHID.PL_OS_TYPE.OS_WINDOWS_LINUX);
+    plhid.setStreamParam((short)6,(short)2);
     plhid.setHIDStream(asciiString);
     plhid.setPLProtocol(ploem, true);
     String unknown = plhid.verifyKBDStream();
