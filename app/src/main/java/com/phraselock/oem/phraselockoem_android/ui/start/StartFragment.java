@@ -222,8 +222,11 @@ public class StartFragment extends PLOEMFragment implements PhraseLockStatusDele
   @Override
   public void delegateReceiveMasterKey(byte error, byte[] iv, byte[] aes256Key)
   {
-    String sericeUUID = ploem.getUSBSerivceUUID();
-    log("BLE Service UUID: " + sericeUUID);
+    /**
+     This callback is called when your main-key + iv-vector is transmittet from the Phrase-Lock USB-Key
+     to your application. You may use this key to e.g. encrypt/decrypt login-credentials. You are free to
+     change this key at any time.
+     */
   }
   
   /* Called when USB-Mode has changed between CTAP2 / HID / Combined */
