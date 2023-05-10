@@ -401,7 +401,11 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
   }
   
   @Override
-  public void storeResidentKeyRecord(String uname,
+  public void storeResidentKeyRecord(String rp1,
+                                     String rp2,
+                                     String credDomain,
+                                     String credName,
+                                     String uname,
                                      String userid,
                                      String dname,
                                      String rpidhash,
@@ -412,15 +416,19 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     db.storeResidentKeyRecord(uname, userid, dname, rpidhash, cridhash, residentkey, privkey);
   }
   
-  
   @Override
-  public String readResidentKeys(String rpidHash)
+  public String readResidentKeys(String rp1,
+                                 String rp2,
+                                 String rpidHash)
   {
     return db.readResidentKeys(rpidHash);
   }
   
   @Override
-  public String readResidentKeys(String cridHash, String rpidHash)
+  public String readResidentKeys(String rp1,
+                                 String rp2,
+                                 String cridHash,
+                                 String rpidHash)
   {
     return db.readResidentKeys(cridHash, rpidHash);
   }
