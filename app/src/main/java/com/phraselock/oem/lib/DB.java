@@ -53,7 +53,7 @@ public class DB extends SQLiteOpenHelper {
 		checkBlockDataExists(false);
 		
 		// Resident Credentials
-		checkResidentCredDataExists(false);
+		checkResidentCredDataExists(true);
 	}
 	
 	public String dumpTableJSON(String tablename){
@@ -139,65 +139,7 @@ public class DB extends SQLiteOpenHelper {
 			Log.d(DB.DBGLEVEL, "DB-Exception: dbBlockDataReset: " + e.getMessage()+" / "+e.toString());
 		}
 	}
-	
-	public void checkResidentCredDataExists(boolean reset){
-		try {
-			SQLiteDatabase sql = getReadableDatabase();
-			Cursor c = sql.query("sqlite_master",
-					new String[]{"name"}, "type='table' AND name='residentCredData'",
-					null, null, null, null);
-			if (c!=null){
-				int ccount = c.getCount();
-				if(ccount==0 || reset){
-					dbResidentCredDataReset();
-					Log.d(DB.DBGLEVEL, "Table created: " + "category");
-				}
-			}
-			c.close();
-			sql.close();
-		}catch (Exception e){
-			Log.d(DB.DBGLEVEL, "DB-Exception on checkResidentCredDataExists: " + e.getMessage()+" / "+e.toString());
-		}
-	}
-	
-	public void dbResidentCredDataReset(){
-		try {
-			SQLiteDatabase sql = getWritableDatabase();
-			sql.execSQL("DROP TABLE IF EXISTS residentCredData;");
-			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx01;");
-			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx02;");
-			sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx03;");
-			
-			sql.execSQL("CREATE TABLE IF NOT EXISTS residentCredData ( " +
-					"idx            INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
-					"userid		    TEXT DEFAULT '-', " +
-					"uname          TEXT DEFAULT '-', " +
-					"dname          TEXT DEFAULT '-', " +
-					"rpidhash       TEXT DEFAULT '-', " +
-					"cridhash       TEXT DEFAULT '-', " +
-					"residentkey    TEXT DEFAULT '-', " +
-					"privkey        TEXT DEFAULT '-' );"
-			);
-			
-			sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx01 ON residentCredData (cridhash,rpidhash);");
-			sql.execSQL("CREATE INDEX residentCredData_idx02 ON residentCredData (cridhash);");
-			sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx03 ON residentCredData (userid);");
-			
-		}catch (Exception e){
-			Log.d(DB.DBGLEVEL, "DB-Exception on dbResidentCredDataReset: " + e.getMessage()+" / "+e.toString());
-		}
-	}
-	
-	public void delete_All_residentCredData(){
-		try {
-			SQLiteDatabase sql = getWritableDatabase();
-			String cmd = String.format("DELETE from residentCredData;");
-			sql.execSQL(cmd);
-			sql.close();
-		}catch (Exception e){
-			Log.d(DB.DBGLEVEL, "DB-Exception on delete_All_residentCredData " + e.getMessage()+" / "+e.toString());
-		}
-	}
+  
 	
 	public boolean setBlockdata(String key, String data){
 		try {
@@ -353,57 +295,127 @@ public class DB extends SQLiteOpenHelper {
 			Log.d(DB.DBGLEVEL, "DB-Exception on deleteBlockdata " + e.getMessage()+" / "+e.toString());
 		}
 	}
-
-	public void storeResidentKeyRecord(String uname,
-	                                   String userid,
-	                                   String dname,
-	                                   String rpidhash,
-	                                   String cridhash,
-	                                   String residentkey,
-	                                   String privkey)
-	{
-		try{
-			String query = String.format("INSERT OR REPLACE INTO residentCredData " +
-							" (uname, userid, dname, rpidhash, cridhash, residentkey, privkey) " +
-							" VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s');",
-					uname, userid, dname, rpidhash, cridhash, residentkey, privkey);
-			SQLiteDatabase sql = getWritableDatabase();
-			sql.execSQL(query);
-			sql.close();
-		}catch (Exception e){
-			Log.d(DB.DBGLEVEL, "DB-Exception storeResidentKeyRecord: " + e.getMessage()+" / "+e.toString());
-		}
-	}
-	
-	public String readResidentKeys(String rpidHash)
-	{
-		StringBuilder sb = new StringBuilder();
-		try{
-			String cmd = String.format("SELECT residentkey, privkey from residentCredData where rpidhash='%s';",rpidHash);
-			SQLiteDatabase sql = getReadableDatabase();
-			Cursor c = sql.rawQuery(cmd, null);
-			dumpSQLResultJSON(c,sb,"rklist");
-			c.close();
-			sql.close();
-		}catch (Exception ignored){
-		}
-		return sb.toString();
-	}
-	
-	public String readResidentKeys(String cridHash, String rpidHash)
-	{
-		StringBuilder sb = new StringBuilder();
-		try{
-			String cmd = String.format("SELECT residentkey, privkey from residentCredData where cridhash='%s' and rpidhash='%s';",cridHash,rpidHash);
-			SQLiteDatabase sql = getReadableDatabase();
-			Cursor c = sql.rawQuery(cmd, null);
-			dumpSQLResultJSON(c,sb,"rklist");
-			c.close();
-			sql.close();
-		}catch (Exception ignored){
-		}
-		return sb.toString();
-	}
+  
+  public void checkResidentCredDataExists(boolean reset){
+    try {
+      SQLiteDatabase sql = getReadableDatabase();
+      Cursor c = sql.query("sqlite_master",
+        new String[]{"name"}, "type='table' AND name='residentCredData'",
+        null, null, null, null);
+      if (c!=null){
+        int ccount = c.getCount();
+        if(ccount==0 || reset){
+          dbResidentCredDataReset();
+          Log.d(DB.DBGLEVEL, "Table created: " + "category");
+        }
+      }
+      c.close();
+      sql.close();
+    }catch (Exception e){
+      Log.d(DB.DBGLEVEL, "DB-Exception on checkResidentCredDataExists: " + e.getMessage()+" / "+e.toString());
+    }
+  }
+  
+  public void dbResidentCredDataReset(){
+    try {
+      SQLiteDatabase sql = getWritableDatabase();
+      sql.execSQL("DROP TABLE IF EXISTS residentCredData;");
+      sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx01;");
+      sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx02;");
+      sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx03;");
+      sql.execSQL("DROP INDEX IF EXISTS residentCredData_idx04;");
+      
+      sql.execSQL("CREATE TABLE IF NOT EXISTS residentCredData ( " +
+        "idx         INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+        "credUUID    TEXT DEFAULT '-', " +
+        "credDomain  TEXT DEFAULT '-', " +
+        "credName    TEXT DEFAULT '-', " +
+        "userid      TEXT DEFAULT '-', " +
+        "uname       TEXT DEFAULT '-', " +
+        "dname       TEXT DEFAULT '-', " +
+        "rpidhash    TEXT DEFAULT '-', " +
+        "cridhash    TEXT DEFAULT '-', " +
+        "residentkey TEXT DEFAULT '-', " +
+        "privkey     TEXT DEFAULT '-' " +
+        ");"
+      );
+      
+      sql.execSQL("CREATE UNIQUE INDEX residentCredData_idx01 ON residentCredData (credUUID, rpidhash, cridhash);");
+      sql.execSQL("CREATE INDEX residentCredData_idx02 ON residentCredData (rpidhash);");
+      sql.execSQL("CREATE INDEX residentCredData_idx03 ON residentCredData (userid);");
+      sql.execSQL("CREATE INDEX residentCredData_idx04 ON residentCredData (credUUID);");
+      
+    }catch (Exception e){
+      Log.d(DB.DBGLEVEL, "DB-Exception on dbResidentCredDataReset: " + e.getMessage()+" / "+e.toString());
+    }
+  }
+  
+  public void delete_All_residentCredData(){
+    try {
+      SQLiteDatabase sql = getWritableDatabase();
+      String cmd = String.format("DELETE from residentCredData;");
+      sql.execSQL(cmd);
+      sql.close();
+    }catch (Exception e){
+      Log.d(DB.DBGLEVEL, "DB-Exception on delete_All_residentCredData " + e.getMessage()+" / "+e.toString());
+    }
+  }
+  
+  public void storeResidentKeyRecord(String credUUID,
+                                     String credDomain,
+                                     String credName,
+                                     String uname,
+                                     String userid,
+                                     String dname,
+                                     String rpidhash,
+                                     String cridhash,
+                                     String residentkey,
+                                     String privkey)
+  {
+    try{
+      String query = String.format("INSERT OR REPLACE INTO residentCredData " +
+          " (credUUID,credDomain, credName, uname, userid, dname, rpidhash, cridhash, residentkey, privkey) " +
+          " VALUES ('%s','%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s');",
+        credUUID, credDomain, credName, uname, userid, dname, rpidhash, cridhash, residentkey, privkey);
+      SQLiteDatabase sql = getWritableDatabase();
+      sql.execSQL(query);
+      sql.close();
+    }catch (Exception e){
+      Log.d(DB.DBGLEVEL, "DB-Exception storeResidentKeyRecord: " + e.getMessage()+" / "+e.toString());
+    }
+  }
+  
+  public String readResidentKeys(String credUUID, String rpidHash)
+  {
+    StringBuilder sb = new StringBuilder();
+    try{
+      String cmd = String.format("SELECT * from residentCredData " +
+        "where credUUID='%s' and rpidhash='%s' ;",credUUID, rpidHash);
+      SQLiteDatabase sql = getReadableDatabase();
+      Cursor c = sql.rawQuery(cmd, null);
+      dumpSQLResultJSON(c,sb,"rklist");
+      c.close();
+      sql.close();
+    }catch (Exception ignored){
+    }
+    return sb.toString();
+  }
+  
+  public String readResidentKeys(String credUUID, String cridHash, String rpidHash)
+  {
+    StringBuilder sb = new StringBuilder();
+    try{
+      String cmd = String.format("SELECT * from residentCredData " +
+        "where credUUID='%s' and cridhash='%s' and rpidhash='%s';",credUUID, cridHash, rpidHash);
+      SQLiteDatabase sql = getReadableDatabase();
+      Cursor c = sql.rawQuery(cmd, null);
+      dumpSQLResultJSON(c,sb,"rklist");
+      c.close();
+      sql.close();
+    }catch (Exception ignored){
+    }
+    return sb.toString();
+  }
 	
 	public void setCoreDataSet(String ltc, byte[] cd)
 	{
