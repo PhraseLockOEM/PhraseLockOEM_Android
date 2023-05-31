@@ -129,6 +129,8 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
       bInt = ploem.loadTokenID(rp1, rp2, "12345678910", p12PrivCert, certPWD);
     }
     
+    long counter = ploem.incrementCounter(0);
+    
     /**
      * loadTokenID() is used to aply a different token
      *
