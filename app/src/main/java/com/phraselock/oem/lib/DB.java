@@ -53,7 +53,7 @@ public class DB extends SQLiteOpenHelper {
 		checkBlockDataExists(false);
 		
 		// Resident Credentials
-		checkResidentCredDataExists(true);
+		checkResidentCredDataExists(false);
 	}
 	
 	public String dumpTableJSON(String tablename){
