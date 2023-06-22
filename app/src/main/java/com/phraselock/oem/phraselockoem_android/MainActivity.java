@@ -123,10 +123,10 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     
     ploem.enableUserVerification(false);
     
-    boolean bInt = ploem.loadTokenID(rp1, rp2, null, p12PrivCert, certPWD);
+    boolean bInt = ploem.loadTokenID(rp1, rp2, false, null, p12PrivCert, certPWD);
     
     if (!bInt) {
-      bInt = ploem.loadTokenID(rp1, rp2, "12345678910", p12PrivCert, certPWD);
+      bInt = ploem.loadTokenID(rp1, rp2, false, "12345678910", p12PrivCert, certPWD);
     }
     
     long counter = ploem.incrementCounter(0);
