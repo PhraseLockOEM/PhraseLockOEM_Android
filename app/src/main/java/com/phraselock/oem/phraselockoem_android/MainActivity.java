@@ -11,9 +11,7 @@ import android.os.ParcelUuid;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-
 import java.io.InputStream;
-
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;

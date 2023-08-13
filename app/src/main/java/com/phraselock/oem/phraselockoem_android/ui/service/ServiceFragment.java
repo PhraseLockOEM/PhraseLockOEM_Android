@@ -12,28 +12,15 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.NonNull;
-
-//import com.google.zxing.client.android.Intents;
-//import com.google.zxing.integration.android.IntentIntegrator;
-//import com.google.zxing.integration.android.IntentResult;
-
-
-//import com.journeyapps.barcodescanner.ScanContract;
-//import com.journeyapps.barcodescanner.ScanOptions;
 import com.google.zxing.client.android.Intents;
 import com.ipoxo.PhraseLock;
-import com.ipoxo.hid.PLHID;
-import com.ipoxo.lib.FC;
-import com.ipoxo.lib.ns.NSData;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
 import com.phraselock.oem.lib.DB;
+import com.phraselock.oem.lib.FC;
 import com.phraselock.oem.lib.PLOEMFragment;
 import com.phraselock.oem.phraselockoem_android.MainActivity;
 import com.phraselock.oem.phraselockoem_android.R;
-
-import java.nio.ByteBuffer;
-import java.util.UUID;
 
 public class ServiceFragment extends PLOEMFragment {
 	
