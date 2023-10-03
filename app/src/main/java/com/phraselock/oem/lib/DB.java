@@ -389,8 +389,9 @@ public class DB extends SQLiteOpenHelper {
   {
     StringBuilder sb = new StringBuilder();
     try{
-      String cmd = String.format("SELECT * from residentCredData " +
-        "where credUUID='%s' and rpidhash='%s' ;",credUUID, rpidHash);
+      String cmd = String.format("SELECT residentkey, privkey, userid, uname, dname " +
+        "from residentCredData " +
+        "where credUUID='%s' and rpidhash='%s' and rpidhash is not \"-\";",credUUID, rpidHash);
       SQLiteDatabase sql = getReadableDatabase();
       Cursor c = sql.rawQuery(cmd, null);
       dumpSQLResultJSON(c,sb,"rklist");
@@ -405,7 +406,8 @@ public class DB extends SQLiteOpenHelper {
   {
     StringBuilder sb = new StringBuilder();
     try{
-      String cmd = String.format("SELECT * from residentCredData " +
+      String cmd = String.format("SELECT rpidhash, cridhash, privkey, userid, uname, dname " +
+        "from residentCredData " +
         "where credUUID='%s' and cridhash='%s' and rpidhash='%s';",credUUID, cridHash, rpidHash);
       SQLiteDatabase sql = getReadableDatabase();
       Cursor c = sql.rawQuery(cmd, null);

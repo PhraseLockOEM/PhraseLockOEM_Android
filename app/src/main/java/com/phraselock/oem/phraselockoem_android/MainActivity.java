@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.ParcelUuid;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -100,10 +101,11 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     navView.setSelectedItemId(R.id.navigation_start);
     
     /* ***************** PhraseLock Initialisation START  ***************** */
-        /*
-         Run this ONLY once! Execute it somewhere in an object, service
-         or activity that retains as long the app is running.
-        */
+    
+    /*
+     Run this ONLY once! Execute it somewhere in an object, service
+     or activity that retains as long the app is running.
+    */
     
     db = new DB(this);
     db.initOnStartDB(this);
@@ -117,8 +119,12 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     String certPWD = getCertPWD(certID);
     
     ploem = new PhraseLock();
-    ploem.initPhraseLock(this, this, apiKey, 0xF0FF); // Logging filter
-    
+    ploem.initPhraseLock(this, this, apiKey, 0x0088); // Logging filter
+  
+    /**
+     * User verification is disabled because smartphone owner must activate a token upfront
+     * by choosing a credential that can be secured with user-biometrics.
+     */
     ploem.enableUserVerification(false);
     
     boolean bInt = ploem.loadTokenID(rp1, rp2, false, null, p12PrivCert, certPWD);
@@ -130,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     long counter = ploem.incrementCounter(0);
     
     /**
-     * loadTokenID() is used to aply a different token
+     * loadTokenID() is used to apply a different token
      *
      * ploem.loadTokenID("Your-Specific-Token", [the certificate in pfx format], "the certificate-passwort");
      */
@@ -273,6 +279,10 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
   @Override
   public int userAction(String extra)
   {
+    /**
+     * Nicht aktive weil im Token-Setup deaktiviert
+     * ploem.enableUserVerification(false);
+     */
     if (!isForground) {
       return 1;
     }
@@ -429,7 +439,9 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
                                  String rp2,
                                  String rpidHash)
   {
-    return db.readResidentKeys(rp1,rpidHash);
+    String json = db.readResidentKeys(rp1,rpidHash);
+    Log.i(DB.DBGLEVEL,"readResidentKeys (2 param): " + json);
+    return json;
   }
   
   public String readResidentKeys(String rp1,
@@ -437,7 +449,9 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
                                  String cridHash,
                                  String rpidHash)
   {
-    return db.readResidentKeys(rp1, cridHash, rpidHash);
+    String json =  db.readResidentKeys(rp1, cridHash, rpidHash);
+    Log.i(DB.DBGLEVEL,"readResidentKeys (3 param): " + json);
+    return json;
   }
   
 }
