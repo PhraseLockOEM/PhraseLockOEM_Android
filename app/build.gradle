@@ -15,7 +15,7 @@ android {
 
     defaultConfig {
         applicationId "com.phraselock.oem.phraselockoem_android"
-        minSdk 29
+        minSdk 26
         targetSdk 34
         versionCode 1
         versionName "1.0"
