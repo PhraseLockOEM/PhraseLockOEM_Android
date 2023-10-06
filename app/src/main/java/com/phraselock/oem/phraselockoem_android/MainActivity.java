@@ -440,7 +440,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
                                  String rpidHash)
   {
     String json = db.readResidentKeys(rp1,rpidHash);
-    Log.i(DB.DBGLEVEL,"readResidentKeys (2 param): " + json);
+    //Log.i(DB.DBGLEVEL,"readResidentKeys (2 param): " + json);
     return json;
   }
   
@@ -450,7 +450,7 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
                                  String rpidHash)
   {
     String json =  db.readResidentKeys(rp1, cridHash, rpidHash);
-    Log.i(DB.DBGLEVEL,"readResidentKeys (3 param): " + json);
+    //Log.i(DB.DBGLEVEL,"readResidentKeys (3 param): " + json);
     return json;
   }
   
