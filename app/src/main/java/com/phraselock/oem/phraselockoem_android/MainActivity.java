@@ -119,7 +119,12 @@ public class MainActivity extends AppCompatActivity implements PhraseLock.IPL, P
     String certPWD = getCertPWD(certID);
     
     ploem = new PhraseLock();
-    ploem.initPhraseLock(this, this, apiKey, 0x0088); // Logging filter
+    ploem.initPhraseLock(this,
+      this,
+      apiKey, 
+      (byte)12,
+      (byte)5,
+      0x0088); // Logging filter
   
     /**
      * User verification is disabled because smartphone owner must activate a token upfront
